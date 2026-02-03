@@ -4,6 +4,7 @@
   "private": true,
   "main": "dist/main/index.js",
   "scripts": {
+    "build": "tsc -b",
     "start": "electron ."
   },
   "dependencies": {

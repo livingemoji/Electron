@@ -4,7 +4,7 @@
     "composite": true,
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "types": ["react", "react-dom"],
+    "types": ["react", "react-dom", "vite/client"],
     "jsx": "react-jsx",
     "rootDir": "src/renderer",
     "outDir": "dist/renderer"

@@ -8,8 +8,8 @@ import {
   markRead,
   searchMessages,
 } from "./db/queries";
-import { simulateDrop } from "./websocket/server";
-import { startWSServer } from "./websocket/server";
+import { simulateDrop, startWSServer } from "./websocket/server";
+import type { Message } from "../../shared/types";
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -24,7 +24,11 @@ function createWindow() {
     },
   });
 
-  mainWindow.loadURL("http://localhost:5173");
+  if (app.isPackaged) {
+    mainWindow.loadFile(path.join(__dirname, "../renderer/index.html"));
+  } else {
+    mainWindow.loadURL("http://localhost:5173");
+  }
 }
 
 app.whenReady().then(() => {
@@ -43,7 +47,7 @@ app.whenReady().then(() => {
   ipcMain.handle("messages:search", (_e, chatId: string, query: string) =>
     searchMessages(chatId, query)
   );
-  ipcMain.handle("messages:insert", (_e, msg) => insertMessage(msg));
+  ipcMain.handle("messages:insert", (_e, msg: Message) => insertMessage(msg));
   ipcMain.handle("db:seed", () => seedDB());
   ipcMain.handle("ws:simulateDrop", () => simulateDrop());
   createWindow();

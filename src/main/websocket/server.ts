@@ -1,4 +1,5 @@
 import { WebSocketServer } from "ws";
+import type { RawData, WebSocket } from "ws";
 import type { Message } from "../../../shared/types";
 
 let wss: WebSocketServer | null = null;
@@ -35,8 +36,8 @@ export function startWSServer() {
   if (wss) return;
   wss = new WebSocketServer({ port: 8081 });
 
-  wss.on("connection", ws => {
-    ws.on("message", data => {
+  wss.on("connection", (ws: WebSocket) => {
+    ws.on("message", (data: RawData) => {
       if (data.toString() === "ping") ws.send("pong");
     });
   });

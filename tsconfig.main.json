@@ -5,8 +5,8 @@
     "module": "CommonJS",
     "lib": ["ES2020"],
     "types": ["node", "electron"],
-    "rootDir": "src/main",
+    "rootDir": ".",
     "outDir": "dist/main"
   },
-  "include": ["src/main"]
+  "include": ["src/main", "shared"]
 }

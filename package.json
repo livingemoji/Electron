@@ -4,10 +4,13 @@
   "private": true,
   "main": "dist/main/index.js",
   "scripts": {
-    "build": "tsc -b",
-    "dev": "vite",
-    "dev:electron": "wait-on http://localhost:5173 && electron .",
-    "dev:all": "concurrently \"npm run dev\" \"npm run dev:electron\"",
+    "build": "npm run build:main && npm run build:renderer",
+    "build:main": "tsc -b",
+    "build:renderer": "vite build",
+    "dev:main": "tsc -b -w",
+    "dev:renderer": "vite",
+    "dev:electron": "wait-on dist/main/index.js http://localhost:5173 && electron .",
+    "dev:all": "concurrently \"npm run dev:main\" \"npm run dev:renderer\" \"npm run dev:electron\"",
     "start": "electron ."
   },
   "dependencies": {
@@ -22,6 +25,9 @@
     "@types/node": "^25.2.0",
     "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.3",
+    "@types/better-sqlite3": "^7.6.9",
+    "@types/react-window": "^1.8.8",
+    "@types/ws": "^8.5.12",
     "@vitejs/plugin-react": "^5.0.0",
     "concurrently": "^9.2.1",
     "typescript": "^5.9.3",

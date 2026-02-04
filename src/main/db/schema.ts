@@ -4,7 +4,7 @@ import path from "path";
 import fs from "fs";
 
 const dbPath = path.join(appDataDir(), "chat.db");
-export const db = new Database(dbPath);
+export const db: Database.Database = new Database(dbPath);
 
 function appDataDir() {
   const baseDir = app.getPath("userData");
@@ -36,7 +36,8 @@ export function initDB() {
 }
 
 export function seedDB() {
-  const chatCount = db.prepare(`SELECT COUNT(*) as c FROM chats`).get().c;
+  const row = db.prepare(`SELECT COUNT(*) as c FROM chats`).get() as { c: number };
+  const chatCount = row.c;
   if (chatCount > 0) return;
 
   const insertChat = db.prepare(
